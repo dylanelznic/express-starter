@@ -1,0 +1,35 @@
+import { join as joinPath } from 'path';
+
+import { IQueryFileOptions, QueryFile } from 'pg-promise';
+
+/** SQL queries for the Users table */
+// TODO: Figure out how to read sql files post-build (within dist)
+export const users = {
+  // all: sql('users/all.sql'),
+  // byId: sql('users/by-id.sql'),
+  // byName: sql('users/by-name.sql'),
+  // delete: sql('users/delete.sql'),
+};
+
+/**
+ * Helper for linking to external query files
+ *
+ * @param file - The SQL file to link
+ */
+function sql(file: string): QueryFile {
+  const fullPath: string = joinPath(__dirname, file);
+
+  const options: IQueryFileOptions = {
+    compress: true,
+    minify: true,
+  };
+
+  // Represents an external SQL file
+  const qf: QueryFile = new QueryFile(fullPath, options);
+
+  if (qf.error) {
+    console.error(qf.error);
+  }
+
+  return qf;
+}
