@@ -3,12 +3,11 @@ import { join as joinPath } from 'path';
 import { IQueryFileOptions, QueryFile } from 'pg-promise';
 
 /** SQL queries for the Users table */
-// TODO: Figure out how to read sql files post-build (within dist)
 export const users = {
-  // all: sql('users/all.sql'),
-  // byId: sql('users/by-id.sql'),
-  // byName: sql('users/by-name.sql'),
-  // delete: sql('users/delete.sql'),
+  all: sql('users/all.sql'),
+  byId: sql('users/by-id.sql'),
+  byName: sql('users/by-name.sql'),
+  delete: sql('users/delete.sql'),
 };
 
 /**

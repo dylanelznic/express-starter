@@ -31,6 +31,41 @@ router.get(
 );
 
 /**
+ * /users/{userId}:
+ *   get:
+ *     description: Return the User for the passed in User id
+ *     parameters:
+ *       - name: userId
+ *         description: The id of the User to fetch
+ *         in: path
+ *         type: string
+ *         required: true
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Successfuly returned the User
+ *       500:
+ *         description: Error returning the User
+ */
+router.get(
+  '/:userId',
+  async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const userId = req.params.userId;
+      const user = await db.users.byId(userId);
+      return res.send(user);
+    } catch (e) {
+      console.log(e);
+      const userId = req.params.userId;
+      return res
+        .status(500)
+        .send(`An error occured while fetching a user for the id: ${userId}`);
+    }
+  },
+);
+
+/**
  * /users/{userId}/name:
  *   get:
  *     description: Return the name for the passed in User id
@@ -73,7 +108,7 @@ router.get(
       const userId = req.params.userId;
       return res
         .status(500)
-        .send(`An error occured while fetching the name for ${userId}`);
+        .send(`An error occured while fetching a name for the id: ${userId}`);
     }
   },
 );

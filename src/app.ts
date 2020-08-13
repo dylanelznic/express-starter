@@ -7,10 +7,10 @@ import { UserRoutes } from 'routes';
 const app = express();
 
 /** Register CORS middleware */
-app.use(cors);
+app.use(cors());
 
 /** Register helmet middleware */
-app.use(helmet);
+app.use(helmet());
 
 /** Register API routes */
 app.use('/users', UserRoutes);

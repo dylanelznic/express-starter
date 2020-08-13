@@ -7,6 +7,7 @@
     "import-sort": "import-sort --write 'src/**/*.ts' 'src/**/*.tsx'",
     "lint": "eslint --max-warnings 0 src --ext ts --ext tsx",
     "prettier": "prettier --write src",
+    "copy-sql": "cp -r src/db/sql/ dist/db/sql/",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node dist/server.js",
