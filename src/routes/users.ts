@@ -21,7 +21,6 @@ router.get(
   async (req: Request, res: Response): Promise<Response> => {
     try {
       const users = await db.users.all();
-      console.log('users', users);
       return res.send(users);
     } catch (e) {
       console.log(e);

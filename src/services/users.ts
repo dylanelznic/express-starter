@@ -1,7 +1,7 @@
 import { User } from 'db/models';
 
 /** Services functions for Users */
-class UsersService {
+export class UsersService {
   /**
    * Return the reversed name of a User
    *
@@ -11,5 +11,3 @@ class UsersService {
     return user.name.split('').reverse().join('');
   };
 }
-
-export default UsersService;

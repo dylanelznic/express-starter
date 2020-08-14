@@ -30,7 +30,7 @@ export class UsersRepository {
    * @param id - The id of the User to select
    */
   byId = async (id: string): Promise<User | null> => {
-    return this.db.one(sql.byId, id);
+    return this.db.oneOrNone(sql.byId, id);
   };
 
   /**
@@ -39,7 +39,7 @@ export class UsersRepository {
    * @param name - The name of the User to select
    */
   byName = async (name: string): Promise<User | null> => {
-    return this.db.one(sql.byName, name);
+    return this.db.oneOrNone(sql.byName, name);
   };
 
   /**
