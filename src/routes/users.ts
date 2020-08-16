@@ -1,6 +1,6 @@
 import { db } from 'db';
-import { Request, Response, Router } from 'express';
-import { UsersService } from 'services';
+import { NextFunction, Request, Response, Router } from 'express';
+import { ResponseError, UsersService } from 'services';
 
 const router = Router();
 
@@ -18,13 +18,16 @@ const router = Router();
  */
 router.get(
   '/',
-  async (req: Request, res: Response): Promise<Response> => {
+  async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
     try {
       const users = await db.users.all();
       return res.send(users);
     } catch (e) {
-      console.log(e);
-      return res.status(500).send('An error occured while fetching users');
+      next(e);
     }
   },
 );
@@ -49,17 +52,22 @@ router.get(
  */
 router.get(
   '/:userId',
-  async (req: Request, res: Response): Promise<Response> => {
+  async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
     try {
       const userId = req.params.userId;
       const user = await db.users.byId(userId);
+
+      if (!user) {
+        throw new ResponseError('User not found', 404);
+      }
+
       return res.send(user);
     } catch (e) {
-      console.log(e);
-      const userId = req.params.userId;
-      return res
-        .status(500)
-        .send(`An error occured while fetching a user for the id: ${userId}`);
+      next(e);
     }
   },
 );
@@ -89,7 +97,11 @@ router.get(
  */
 router.get(
   '/:userId/name',
-  async (req: Request, res: Response): Promise<Response> => {
+  async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response> => {
     try {
       const userId = req.params.userId;
       const reverse = req.query.reverse === '1';
@@ -98,16 +110,12 @@ router.get(
       if (reverse) {
         const usersService = new UsersService();
         const nameReversed = usersService.getUserNameReversed(user);
-        return res.send(nameReversed);
+        return res.json({ name: nameReversed });
       }
 
-      return res.send(user.name);
+      return res.json({ name: user.name });
     } catch (e) {
-      console.log(e);
-      const userId = req.params.userId;
-      return res
-        .status(500)
-        .send(`An error occured while fetching a name for the id: ${userId}`);
+      next(e);
     }
   },
 );

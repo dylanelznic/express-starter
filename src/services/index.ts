@@ -1,3 +1,4 @@
+import { ResponseError, handleError } from './error-handler';
 import { UsersService } from './users';
 
-export { UsersService };
+export { handleError, ResponseError, UsersService };
