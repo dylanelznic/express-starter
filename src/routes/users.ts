@@ -107,6 +107,10 @@ router.get(
       const reverse = req.query.reverse === '1';
       const user = await db.users.byId(userId);
 
+      if (!user) {
+        throw new ResponseError('User not found', 404);
+      }
+
       if (reverse) {
         const usersService = new UsersService();
         const nameReversed = usersService.getUserNameReversed(user);

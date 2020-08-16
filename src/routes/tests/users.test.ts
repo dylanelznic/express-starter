@@ -28,6 +28,19 @@ describe('/users/:userId', () => {
       .expect('Content-Type', /json/)
       .expect(200, { id: 'test_id', name: 'test_name' });
   });
+
+  it("should return a 404 if user doesn't exist", async () => {
+    const mockQuery = jest.fn();
+    db.users.byId = mockQuery.mockReturnValue(null);
+    return await request(app)
+      .get('/users/test_user')
+      .expect('Content-Type', /json/)
+      .expect(404, {
+        status: 'error',
+        message: 'User not found',
+        statusCode: 404,
+      });
+  });
 });
 
 describe('/users/:userId/name', () => {
@@ -39,8 +52,8 @@ describe('/users/:userId/name', () => {
     });
     return await request(app)
       .get('/users/test_user/name')
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(200, 'test_name');
+      .expect('Content-Type', /json/)
+      .expect(200, { name: 'test_name' });
   });
 
   it("should return a User's name in reverse", async () => {
@@ -51,7 +64,20 @@ describe('/users/:userId/name', () => {
     });
     return await request(app)
       .get('/users/test_user/name?reverse=1')
-      .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(200, 'eman_tset');
+      .expect('Content-Type', /json/)
+      .expect(200, { name: 'eman_tset' });
+  });
+
+  it("should return a 404 if user doesn't exist", async () => {
+    const mockQuery = jest.fn();
+    db.users.byId = mockQuery.mockReturnValue(null);
+    return await request(app)
+      .get('/users/test_user')
+      .expect('Content-Type', /json/)
+      .expect(404, {
+        status: 'error',
+        message: 'User not found',
+        statusCode: 404,
+      });
   });
 });
