@@ -20,6 +20,10 @@ Clone the repo into your local environment
 ```
 git clone git@github.com:dylanelznic/express-starter.git
 ```
+Install dependencies
+```
+npm install
+```
 
 Set up your environment variables as outlined in `.env.example`
 ```
