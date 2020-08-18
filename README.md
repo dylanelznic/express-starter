@@ -6,7 +6,7 @@ A boilerplate for quickly creating servers using Node.js, Express, and pg-promis
 ├── config           // Environment variables and other configuration
 ├── db               // Data access layer
 │   ├── repos        // pg-promise extensions
-|   ├── sql          // SQL queries
+│   ├── sql          // SQL queries
 │   └── types.ts     // Interface models
 ├── routes           // API Routes
 ├── services         // Business logic
