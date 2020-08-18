@@ -1,6 +1,7 @@
 import { db } from 'db';
 import { NextFunction, Request, Response, Router } from 'express';
-import { ResponseError, UsersService } from 'services';
+import { UsersService } from 'services';
+import { ResponseError } from 'utils';
 
 const router = Router();
 
