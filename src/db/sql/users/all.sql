@@ -1,5 +1,5 @@
 /*
-    Select all User records
+    Select all users records
 */
 SELECT *
 FROM Users
